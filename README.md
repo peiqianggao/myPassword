@@ -1,2 +1,2 @@
 # myPassword
-Generate  password with your account and salt on different websites. And you can show your password at any time with the same account and salt.
+根据产品名和唯一的Key，为用户生成不同的密码，只需记录自己的专属Key，无需记住密码，解放大脑！
