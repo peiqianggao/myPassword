@@ -8,7 +8,7 @@
 # Description:            密码生成脚本(幂等)
 # 1) account 账号可以为空，账号为空时以 salt + domain 生成密码
 # 2）密码规则：
-#   - 四种规格：8位，12位，15位(默认)，20位；
+#   - 四种规格：8位，12位，15位(默认)，20位，正负3位
 #   - 必须包含：数字 + 下划线 + 小写字母 + 大写字母
 #   - 从加密串倒序找一个可用的数字作为插入下划线的下标, 如果没有找到, 则将下划线插入到第一位
 #   - 如果加密串前缀没有数字, 从倒序加密串中找第一位数字插入到加密串前缀第一位
@@ -22,7 +22,6 @@ function genPassword() {
     local enStr=${1}
     local len=${2}
     local prefix=${enStr:0:${len}-1}
-
     local numberFlag
     local lowerCaseFlag
     local upperCaseFlag
@@ -64,7 +63,7 @@ function genPassword() {
     [[ -z ${upperCaseFlag} ]] && prefix=${upperLetter:-X}${prefix}
     prefix=${prefix:0:${_index}}_${prefix:${_index}:${len}}
 
-    echo ${prefix:0:${len}}
+    echo ${prefix}
 }
 
 function genEncryptedStr() {
@@ -79,9 +78,16 @@ function usage() {
     echo "This is help doc"
 }
 
-s=$(genEncryptedStr "$1" "$2" "$3")
+s=$(genEncryptedStr "$1" "$2" "${3:-}")
 echo "加密: ${s}"
 genPassword $s 8
 genPassword $s 12
 genPassword $s 15
 genPassword $s 20
+
+#加密: ZjQzZTM0ZjlkZDcxNWYxMmUxMmIyMWIxNmZmNmQyNDEwZWE2MjFkNDIxZGMyNzAzYjA0YWI5N2EyZTE4NWM5Mgo=
+#ZjQzZ_TM
+#ZjQzZ_TM0Zjl
+#ZjQzZ_TM0ZjlkZD
+#ZjQzZ_TM0ZjlkZDcxNWY
+
