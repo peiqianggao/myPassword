@@ -79,7 +79,6 @@ function usage() {
 }
 
 s=$(genEncryptedStr "$1" "$2" "${3:-}")
-s="ZjQzZTM0ZjlkZDcxNWYxMmUxMmIyMWIxNmZmNmQyNDEwZWE2MjFkNDIxZGMyNzAzYjA0YWI5N2EyZTE4NWM5Mgo"
 echo "加密: ${s}"
 genPassword $s 8
 genPassword $s 12
